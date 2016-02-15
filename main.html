@@ -7,11 +7,9 @@
     <link rel="stylesheet" href="leaflet/leaflet.css" />
     <script src="leaflet/leaflet.js"></script>
     <script>
+    // создаём объект карты
     window.onload = function () {
-        var map = L.map('map', {
-            center: [30.0, 0.0],
-            zoom: 2,
-            });
+        var map = L.map('map', {center: [60.0, 60.0], zoom: 2, });
 
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -20,15 +18,20 @@
         accessToken: 'pk.eyJ1IjoibG9iYW5vdiIsImEiOiJjaWtrNHQ0YnUwYTN1dHlqN2pzNHg5eGVkIn0.MO1DmJuIxjlab_pr-FYZ3Q'
         }).addTo(map);
 
+        // определение местоположения
         map.locate({setView: true, maxZoom: 15});
         map.on('locationfound', onLocationFound);
 
+        // добавление маркера в местоположение
         function onLocationFound(e) {
         // create a marker at the users "latlng" and add it to the map
-        L.marker(e.latlng).addTo(map);
+        L.marker(e.latlng)
+        .addTo(map)
+        .bindPopup("<b>Вы - где-то здесь</b>")
+        .openPopup();
         }
 
-        }
+       }
     </script>
 </head>
 <body>
