@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a7c01950-3780-4cdb-96da-d73d6c2424af" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.html" afterPath="$PROJECT_DIR$/main.html" />
     </list>
     <ignored path="leaflet.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,8 +27,8 @@
       <file leaf-file-name="main.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.77310926">
-              <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.37815127">
+              <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -452,7 +453,13 @@
       <option name="project" value="LOCAL" />
       <updated>1455569340960</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Форматирование текста">
+      <created>1455569368629</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1455569368629</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -505,7 +512,8 @@
     <MESSAGE value="Ументшил высоту карты" />
     <MESSAGE value="Добавил маркер на местоположение пользователя" />
     <MESSAGE value="Удалил пустую кнопку" />
-    <option name="LAST_COMMIT_MESSAGE" value="Удалил пустую кнопку" />
+    <MESSAGE value="Форматирование текста" />
+    <option name="LAST_COMMIT_MESSAGE" value="Форматирование текста" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -554,8 +562,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.77310926">
-          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.37815127">
+          <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
           <folding />
         </state>
       </provider>
