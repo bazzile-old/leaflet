@@ -61,6 +61,17 @@
             wmsWV2.addTo(map);
             }
 
+            function addQuicklook() {
+            var wmsQL = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
+            layers: 'Geoportal:showBrowseImage',
+            format: 'image/png',
+            transparent: true,
+            version: '1.1.0',
+            attribution: "myattribution"
+            });
+            wmsQL.addTo(map);
+            }
+
 
     </script>
 </head>
@@ -69,6 +80,7 @@
     <div><img src="logo_text_ru.png" alt="Innoter logo" title="Innoter.com" height="60" width="300"></div>
     <button onclick="addGE()"><b>Добавить покрытие GeoEye-1</b></button>
     <button onclick="addWV2()"><b>Добавить покрытие WorldView-2</b></button>
+    <button onclick="addQuicklook()"><b>Добавить квиклук</b></button>
     <div id="map"></div>
 </body>
 </html>
