@@ -24,7 +24,7 @@
 
 
             // определение местоположения
-            map.locate({setView: true, maxZoom: 6});
+            map.locate({setView: true, maxZoom: 11});
             map.on('locationfound', onLocationFound);
 
             // добавление маркера в местоположение
@@ -40,7 +40,7 @@
 
 
             function addGE() {
-            var wmsGE = L.tileLayer.wms("http://localhost:8080/geoserver/Geoportal/wms", {
+            var wmsGE = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
             layers: 'Geoportal:GeoEye_2016',
             format: 'image/png',
             transparent: true,
@@ -51,7 +51,7 @@
             }
 
             function addWV2() {
-            var wmsWV2 = L.tileLayer.wms("http://localhost:8080/geoserver/Geoportal/wms", {
+            var wmsWV2 = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
             layers: 'Geoportal:WorldView2_2016',
             format: 'image/png',
             transparent: true,
