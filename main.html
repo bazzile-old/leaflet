@@ -63,7 +63,7 @@
 
             function addQuicklook() {
             var wmsQL = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
-            layers: 'Geoportal:showBrowseImage',
+            layers: 'Geoportal:Moscow_QL_white',
             format: 'image/png',
             transparent: true,
             version: '1.1.0',
@@ -71,6 +71,8 @@
             });
             wmsQL.addTo(map);
             }
+
+
 
 
     </script>
