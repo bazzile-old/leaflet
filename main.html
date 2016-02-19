@@ -6,8 +6,11 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <link rel="stylesheet" href="css/leaflet.css" />
     <link rel="stylesheet" href="css/Leaflet.Coordinates-0.1.5.css" />
+    <link rel="stylesheet" href="css/leaflet-panel-layers.src.css" />
     <script src="js/leaflet.js"></script>
     <script src="js/Leaflet.Coordinates-0.1.5.src.js"></script>
+    <script src="js/leaflet-panel-layers.src.js"></script>
+
     <script>
         // создаём объект карты
         function mapinit() {
@@ -61,6 +64,7 @@
 
             map = L.map('map', {center: [60.0, 40.0], zoom: 4, layers: blackMap,});
             // переключатель слоёв
+
             L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 
@@ -106,9 +110,9 @@
                 shadowSize:   [35, 39], // size of the shadow
                 iconAnchor:   [28, 30], // point of the icon which will correspond to marker's location
                 shadowAnchor: [14, 35],  // the same for the shadow
-                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                popupAnchor:  [-14, -35] // point from which the popup should open relative to the iconAnchor
             })
-                L.marker([55.653503, 37.593950], {icon: innoterIcon}).addTo(map);
+                L.marker([55.653503, 37.593950], {icon: innoterIcon}).addTo(map).bindPopup("Я - офис Иннотер!");
             };
 
     </script>
@@ -116,7 +120,7 @@
 <body onload="mapinit()">
     <h1 class="block-title"><font color="#b02022"><b>Геопортал Иннотер</b></font></h1>
     <div><img src="graphics/logo_text_ru.png" alt="Innoter logo" title="Innoter.com" height="60" width="300"></div>
-    <button onclick="addI()"><b>Показать оффис Иннотер</b></button>
+    <button onclick="addI()"><b>Показать офис Иннотер</b></button>
     <div id="map"></div>
 </body>
 </html>
