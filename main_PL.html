@@ -62,7 +62,7 @@
                 "квиклуки GeoEye-1": wmsQL
             };
 
-map = L.map('map', {center: [60.0, 40.0], zoom: 4, layers: openStreetMap,});
+var map = L.map('map', {center: [60.0, 40.0], zoom: 4, layers: openStreetMap});
 
 
     var baseLayers = [
@@ -102,7 +102,7 @@ map = L.map('map', {center: [60.0, 40.0], zoom: 4, layers: openStreetMap,});
                 {
                     name: "квиклуки GeoEye-1",
                     layer: wmsQL
-                },
+                }
 
             ]
         }
@@ -156,14 +156,14 @@ map = L.map('map', {center: [60.0, 40.0], zoom: 4, layers: openStreetMap,});
                 iconAnchor:   [28, 30], // point of the icon which will correspond to marker's location
                 shadowAnchor: [14, 35],  // the same for the shadow
                 popupAnchor:  [-14, -35] // point from which the popup should open relative to the iconAnchor
-            })
+            });
                 L.marker([55.653503, 37.593950], {icon: innoterIcon}).addTo(map).bindPopup("Я - офис Иннотер!");
-            };
+            }
 
     </script>
 </head>
 <body onload="mapinit()">
-    <h1 class="block-title"><font color="#b02022"><b>Геопортал Иннотер</b></font></h1>
+    <h1 class="block-title"><span style="color: #b02022; "><b>Геопортал Иннотер</b></span></h1>
     <div><img src="graphics/logo_text_ru.png" alt="Innoter logo" title="Innoter.com" height="60" width="300"></div>
     <button onclick="addI()"><b>Показать офис Иннотер</b></button>
     <div id="map"></div>
