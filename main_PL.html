@@ -60,18 +60,7 @@
 
             ;
 
-            var baseMaps = {
-                "Фирменная подложка": blackMap,
-                "OpenStreetMap": openStreetMap
-            };
-
-            var overlayMaps = {
-                "покрыте GeoEye-1": wmsGE,
-                "покрытие World View-2": wmsWV2,
-                "квиклуки GeoEye-1": wmsQL
-            };
-
-map = L.map('map', {center: [54.0, 29.0], zoom: 4, layers: openStreetMap});
+map = L.map('map', {center: [54.0, 29.0], zoom: 4, layers: blackMap});
 
 
     var baseLayers = [
@@ -79,12 +68,12 @@ map = L.map('map', {center: [54.0, 29.0], zoom: 4, layers: openStreetMap});
             group: "Карт-основа",
             layers: [
                 {
-                    active: false,
+                    active: true,
                     name: "Фирменная подложка",
                     layer: blackMap
                 },
                 {
-                    active: true,
+                    active: false,
                     name: "OpenStreetMap",
                     layer: openStreetMap
                 }]
