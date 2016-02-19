@@ -15,7 +15,6 @@
         // создаём объект карты
         function mapinit() {
 
-            var map = L.map('map', {center: [60.0, 40.0], zoom: 4, layers: blackMap,});
 
             var blackMap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                 attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -23,7 +22,6 @@
                 id: 'lobanov.p50d15pe',
                 accessToken: 'pk.eyJ1IjoibG9iYW5vdiIsImEiOiJjaWtrNHQ0YnUwYTN1dHlqN2pzNHg5eGVkIn0.MO1DmJuIxjlab_pr-FYZ3Q'
             }),
-
 
             openStreetMap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png'),
 
@@ -64,8 +62,7 @@
                 "квиклуки GeoEye-1": wmsQL
             };
 
-
-//map.addLayer(blackMap);
+map = L.map('map', {center: [60.0, 40.0], zoom: 4, layers: blackMap,});
 
 
     var baseLayers = [
@@ -103,14 +100,10 @@
             group: "Квиклуки",
             layers: [
                 {
-                    active: false,
                     name: "квиклуки GeoEye-1",
                     layer: wmsQL
                 },
-                {
-                    name: "нет",
-                    layer: wmsQL
-                }
+
             ]
         }
     ];
@@ -152,7 +145,6 @@
             }
 
             }
-
 
             function addI() {
             var innoterIcon = L.icon({

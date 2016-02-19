@@ -27,8 +27,8 @@
       <file leaf-file-name="main.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.115385">
-              <caret line="32" column="14" selection-start-line="26" selection-start-column="20" selection-end-line="32" selection-end-column="14" />
+            <state vertical-scroll-proportion="-28.692308">
+              <caret line="91" column="50" selection-start-line="91" selection-start-column="50" selection-end-line="91" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -37,8 +37,8 @@
       <file leaf-file-name="main_PL.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main_PL.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7567084">
-              <caret line="110" column="30" selection-start-line="110" selection-start-column="30" selection-end-line="110" selection-end-column="30" />
+            <state vertical-scroll-proportion="-0.9159213">
+              <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -392,7 +392,13 @@
       <option name="project" value="LOCAL" />
       <updated>1455895756091</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="добавлены группы слоёв">
+      <created>1455900003428</created>
+      <option name="number" value="00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1455900003428</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -452,7 +458,8 @@
     <MESSAGE value="Добавлено переключение слоёв и ещё куча изменений" />
     <MESSAGE value="версия до panel-layers" />
     <MESSAGE value="всё работает" />
-    <option name="LAST_COMMIT_MESSAGE" value="всё работает" />
+    <MESSAGE value="добавлены группы слоёв" />
+    <option name="LAST_COMMIT_MESSAGE" value="добавлены группы слоёв" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -492,16 +499,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.115385">
-          <caret line="32" column="14" selection-start-line="26" selection-start-column="20" selection-end-line="32" selection-end-column="14" />
+        <state vertical-scroll-proportion="-28.692308">
+          <caret line="91" column="50" selection-start-line="91" selection-start-column="50" selection-end-line="91" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main_PL.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7567084">
-          <caret line="110" column="30" selection-start-line="110" selection-start-column="30" selection-end-line="110" selection-end-column="30" />
+        <state vertical-scroll-proportion="-0.9159213">
+          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
           <folding />
         </state>
       </provider>
