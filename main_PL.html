@@ -15,37 +15,40 @@
         // создаём объект карты
         function mapinit() {
 
+            var map = L.map('map', {center: [60.0, 40.0], zoom: 4, layers: blackMap,});
+
             var blackMap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-            maxZoom: 18,
-            id: 'lobanov.p50d15pe',
-            accessToken: 'pk.eyJ1IjoibG9iYW5vdiIsImEiOiJjaWtrNHQ0YnUwYTN1dHlqN2pzNHg5eGVkIn0.MO1DmJuIxjlab_pr-FYZ3Q'
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                maxZoom: 18,
+                id: 'lobanov.p50d15pe',
+                accessToken: 'pk.eyJ1IjoibG9iYW5vdiIsImEiOiJjaWtrNHQ0YnUwYTN1dHlqN2pzNHg5eGVkIn0.MO1DmJuIxjlab_pr-FYZ3Q'
             }),
+
 
             openStreetMap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png'),
 
             wmsGE = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
-            layers: 'Geoportal:GeoEye_2016',
-            format: 'image/png',
-            transparent: true,
-            version: '1.1.0',
-            attribution: "myattribution"
+                layers: 'Geoportal:GeoEye_2016',
+                format: 'image/png',
+                transparent: true,
+                version: '1.1.0',
+                attribution: "myattribution"
             }),
 
             wmsWV2 = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
-            layers: 'Geoportal:WorldView2_2016',
-            format: 'image/png',
-            transparent: true,
-            version: '1.1.0',
-            attribution: "myattribution"
+                layers: 'Geoportal:WorldView2_2016',
+                format: 'image/png',
+                transparent: true,
+                version: '1.1.0',
+                attribution: "myattribution"
             }),
 
             wmsQL = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
-            layers: 'Geoportal:Moscow_QL_white',
-            format: 'image/png',
-            transparent: true,
-            version: '1.1.0',
-            attribution: "myattribution"
+                layers: 'Geoportal:Moscow_QL_white',
+                format: 'image/png',
+                transparent: true,
+                version: '1.1.0',
+                attribution: "myattribution"
             })
 
             ;
@@ -62,46 +65,59 @@
             };
 
 
-            map = L.map('map', {center: [60.0, 40.0], zoom: 4, layers: blackMap,});
+//map.addLayer(blackMap);
 
 
-        var baseLayers = [
-            {
-                active: true,
-                name: "Фирменная подложка",
-                layer: blackMap
-            },
-            {
-                active: false,
-                name: "OpenStreetMap",
-                layer: openStreetMap
-            }
-        ];
-        var overLayers = [
-            {
-                name: "покрытие World View-2",
-                layer: wmsWV2
-            },
-            {
-                name: "покрыте GeoEye-1",
-                layer: wmsGE
-            }
-        ];
-         var overLooks = [
-            {
-                name: "квиклуки GeoEye-1",
-                layer: wmsQL
-            }
-        ];
+    var baseLayers = [
+        {
+            group: "Карт-основа",
+            layers: [
+                {
+                    active: false,
+                    name: "Фирменная подложка",
+                    layer: blackMap
+                },
+                {
+                    active: true,
+                    name: "OpenStreetMap",
+                    layer: openStreetMap
+                }]
+        }
+    ];
 
+    var overLayers = [
+        {
+            group: "Контуры снимков",
+            layers: [
+                {
+                    name: "покрыте GeoEye-1",
+                    layer: wmsGE
+                },
+                {
+                    name: "покрытие World View-2",
+                    layer: wmsWV2
+                }
+            ]
+        },
+        {
+            group: "Квиклуки",
+            layers: [
+                {
+                    active: false,
+                    name: "квиклуки GeoEye-1",
+                    layer: wmsQL
+                },
+                {
+                    name: "нет",
+                    layer: wmsQL
+                }
+            ]
+        }
+    ];
 
-        map.addControl( new L.Control.PanelLayers(baseLayers, overLayers) );
+    var panelLayers = new L.Control.PanelLayers(baseLayers, overLayers);
 
-
-
-
-
-
+    map.addControl(panelLayers);
 
 
 
