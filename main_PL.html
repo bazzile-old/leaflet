@@ -48,6 +48,14 @@
                 transparent: true,
                 version: '1.1.0',
                 attribution: "myattribution"
+            }),
+
+            wmsFires = L.tileLayer.wms("http://firms.modaps.eosdis.nasa.gov/wms/c6", {
+                layers: 'fires24',
+                format: 'image/png',
+                transparent: true,
+                version: '1.1.0',
+                attribution: "myattribution"
             })
 
             ;
@@ -106,6 +114,16 @@ map = L.map('map', {center: [54.0, 29.0], zoom: 4, layers: openStreetMap});
                 }
 
             ]
+        },
+        {
+            group: "Пожары",
+            layers: [
+                {
+                    name: "Возгорания за 24ч (MODIS)",
+                    layer: wmsFires
+                }
+
+            ]
         }
     ];
 
@@ -132,31 +150,60 @@ map = L.map('map', {center: [54.0, 29.0], zoom: 4, layers: openStreetMap});
             //добавляем шкалу масштаба
             L.control.scale({position: 'bottomleft', imperial: false, maxWidth: 100}).addTo(map);
 
-//            // определение местоположения
-//            map.locate({setView: true, maxZoom: 11});
-//            map.on('locationfound', onLocationFound);
-//
-//            // добавление маркера в местоположение
-//            function onLocationFound(e) {
-//            // create a marker at the users "latlng" and add it to the map
-//            L.marker(e.latlng)
-//            .addTo(map)
-//            .bindPopup("<b>Мы - где-то тут</b>")
-//            .openPopup();
-//            }
+
+var owsrootUrl = 'http://192.168.0.117:8080/geoserver/ows';
+
+var defaultParameters = {
+    service : 'WFS',
+    version : '2.0',
+    request : 'GetFeature',
+    typeName : 'Geoportal:GeoEye_2016',
+    outputFormat : 'text/javascript',
+    format_options : 'callback:getJson',
+    SrsName : 'EPSG:4326'
+};
+
+var parameters = L.Util.extend(defaultParameters);
+var URL = owsrootUrl + L.Util.getParamString(parameters);
+
+var WFSLayer = null;
+var ajax = $.ajax({
+    url : URL,
+    dataType : 'jsonp',
+    jsonpCallback : 'getJson',
+    success : function (response) {
+        WFSLayer = L.geoJson(response, {
+            style: function (feature) {
+                return {
+                    stroke: false,
+                    fillColor: 'FFFFFF',
+                    fillOpacity: 0
+                };
+            },
+            onEachFeature: function (feature, layer) {
+                popupOptions = {maxWidth: 250};
+                layer.bindPopup((
+                "Сенсор: " + feature.properties.PLATFORM.bold() +
+                "<br>Номер снимка: " + feature.properties.CATALOGID.bold() +
+                "<br>Дата съёмки: " + feature.properties.ACQDATE.bold() +
+                "<br>Отклонение от надира: " + feature.properties.AVOFFNADIR + "°")
+                    ,popupOptions);
+            }
+        }).addTo(map);
+    }
+});
+
+
+
+            // определение местоположения
             $('.pure-button').on('click', function(){
               map.locate({setView: true, maxZoom: 11});
             });
 
             map.on('locationfound', onLocationFound);
             function onLocationFound(e) {
-                L.marker(e.latlng).addTo(map).bindPopup("<b>Мы - где-то тут</b>").openPopup();
-            }
-
-
-
-
-            }
+                L.marker(e.latlng).addTo(map).bindPopup("<b>Мы - вот тут</b>").openPopup();
+            }}
 
             function addI() {
             var innoterIcon = L.icon({
