@@ -3,25 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <title>Геопортал Иннотер</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <link rel="stylesheet" href="leaflet/leaflet.css" />
-    <script src="leaflet/leaflet.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/Leaflet.Coordinates-0.1.5.css" />
+    <script src="js/leaflet.js"></script>
+    <script src="js/Leaflet.Coordinates-0.1.5.src.js"></script>
     <script>
         // создаём объект карты
         function mapinit() {
 
-            map = L.map('map', {center: [60.0, 40.0], zoom: 4,});
-
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            var blackMap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
             maxZoom: 18,
             id: 'lobanov.p50d15pe',
             accessToken: 'pk.eyJ1IjoibG9iYW5vdiIsImEiOiJjaWtrNHQ0YnUwYTN1dHlqN2pzNHg5eGVkIn0.MO1DmJuIxjlab_pr-FYZ3Q'
+            }),
+
+            openStreetMap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png'),
+
+            wmsGE = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
+            layers: 'Geoportal:GeoEye_2016',
+            format: 'image/png',
+            transparent: true,
+            version: '1.1.0',
+            attribution: "myattribution"
+            }),
+
+            wmsWV2 = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
+            layers: 'Geoportal:WorldView2_2016',
+            format: 'image/png',
+            transparent: true,
+            version: '1.1.0',
+            attribution: "myattribution"
+            }),
+
+            wmsQL = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
+            layers: 'Geoportal:Moscow_QL_white',
+            format: 'image/png',
+            transparent: true,
+            version: '1.1.0',
+            attribution: "myattribution"
+            })
+
+            ;
+
+            var baseMaps = {
+                "Фирменная подложка": blackMap,
+                "OpenStreetMap": openStreetMap
+            };
+
+            var overlayMaps = {
+                "покрыте GeoEye-1": wmsGE,
+                "покрытие World View-2": wmsWV2,
+                "квиклуки GeoEye-1": wmsQL
+            };
+
+
+            map = L.map('map', {center: [60.0, 40.0], zoom: 4, layers: blackMap,});
+            // переключатель слоёв
+            L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+
+            // добавляем вывод текущих координат
+            L.control.coordinates({
+                position:"bottomleft", //optional default "bootomright"
+                decimals:2, //optional default 4
+                decimalSeperator:".", //optional default "."
+                labelTemplateLat:"Широта: {y}", //optional default "Lat: {y}"
+                labelTemplateLng:"Долгота: {x}", //optional default "Lng: {x}"
+                enableUserInput:true, //optional default true
+                useDMS:false, //optional default false
+                useLatLngOrder: true, //ordering of labels, default false-> lng-lat
+                markerType: L.marker, //optional default L.marker
+                markerProps: {} //optional default {}
             }).addTo(map);
 
             //добавляем шкалу масштаба
             L.control.scale({position: 'bottomleft', imperial: false, maxWidth: 100}).addTo(map);
-
 
             // определение местоположения
             map.locate({setView: true, maxZoom: 11});
@@ -39,47 +97,26 @@
             }
 
 
-            function addGE() {
-            var wmsGE = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
-            layers: 'Geoportal:GeoEye_2016',
-            format: 'image/png',
-            transparent: true,
-            version: '1.1.0',
-            attribution: "myattribution"
-            });
-            wmsGE.addTo(map);
-            }
+            function addI() {
+            var innoterIcon = L.icon({
+                iconUrl: 'css/images/Innoter_logo.png',
+                shadowUrl: 'css/images/Innoter_logoShadow.png',
 
-            function addWV2() {
-            var wmsWV2 = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
-            layers: 'Geoportal:WorldView2_2016',
-            format: 'image/png',
-            transparent: true,
-            version: '1.1.0',
-            attribution: "myattribution"
-            });
-            wmsWV2.addTo(map);
-            }
-
-            function addQuicklook() {
-            var wmsQL = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
-            layers: 'Geoportal:Moscow_QL_white',
-            format: 'image/png',
-            transparent: true,
-            version: '1.1.0',
-            attribution: "myattribution"
-            });
-            wmsQL.addTo(map);
-            }
+                iconSize:     [28, 30], // size of the icon
+                shadowSize:   [35, 39], // size of the shadow
+                iconAnchor:   [28, 30], // point of the icon which will correspond to marker's location
+                shadowAnchor: [14, 35],  // the same for the shadow
+                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+            })
+                L.marker([55.653503, 37.593950], {icon: innoterIcon}).addTo(map);
+            };
 
     </script>
 </head>
 <body onload="mapinit()">
     <h1 class="block-title"><font color="#b02022"><b>Геопортал Иннотер</b></font></h1>
-    <div><img src="logo_text_ru.png" alt="Innoter logo" title="Innoter.com" height="60" width="300"></div>
-    <button onclick="addGE()"><b>Добавить покрытие GeoEye-1</b></button>
-    <button onclick="addWV2()"><b>Добавить покрытие WorldView-2</b></button>
-    <button onclick="addQuicklook()"><b>Добавить квиклук</b></button>
+    <div><img src="graphics/logo_text_ru.png" alt="Innoter logo" title="Innoter.com" height="60" width="300"></div>
+    <button onclick="addI()"><b>Показать оффис Иннотер</b></button>
     <div id="map"></div>
 </body>
 </html>
