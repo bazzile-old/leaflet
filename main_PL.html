@@ -10,11 +10,12 @@
     <script src="js/leaflet.js"></script>
     <script src="js/Leaflet.Coordinates-0.1.5.src.js"></script>
     <script src="js/leaflet-panel-layers.src.js"></script>
+    <script src="js/jquery-1.12.0.min.js"></script>
+
 
     <script>
         // создаём объект карты
         function mapinit() {
-
 
             var blackMap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                 attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -62,7 +63,7 @@
                 "квиклуки GeoEye-1": wmsQL
             };
 
-var map = L.map('map', {center: [60.0, 40.0], zoom: 4, layers: openStreetMap});
+map = L.map('map', {center: [54.0, 29.0], zoom: 4, layers: openStreetMap});
 
 
     var baseLayers = [
@@ -131,18 +132,29 @@ var map = L.map('map', {center: [60.0, 40.0], zoom: 4, layers: openStreetMap});
             //добавляем шкалу масштаба
             L.control.scale({position: 'bottomleft', imperial: false, maxWidth: 100}).addTo(map);
 
-            // определение местоположения
-            map.locate({setView: true, maxZoom: 11});
-            map.on('locationfound', onLocationFound);
+//            // определение местоположения
+//            map.locate({setView: true, maxZoom: 11});
+//            map.on('locationfound', onLocationFound);
+//
+//            // добавление маркера в местоположение
+//            function onLocationFound(e) {
+//            // create a marker at the users "latlng" and add it to the map
+//            L.marker(e.latlng)
+//            .addTo(map)
+//            .bindPopup("<b>Мы - где-то тут</b>")
+//            .openPopup();
+//            }
+            $('.pure-button').on('click', function(){
+              map.locate({setView: true, maxZoom: 11});
+            });
 
-            // добавление маркера в местоположение
+            map.on('locationfound', onLocationFound);
             function onLocationFound(e) {
-            // create a marker at the users "latlng" and add it to the map
-            L.marker(e.latlng)
-            .addTo(map)
-            .bindPopup("<b>Мы - где-то тут</b>")
-            .openPopup();
+                L.marker(e.latlng).addTo(map).bindPopup("<b>Мы - где-то тут</b>").openPopup();
             }
+
+
+
 
             }
 
@@ -157,7 +169,8 @@ var map = L.map('map', {center: [60.0, 40.0], zoom: 4, layers: openStreetMap});
                 shadowAnchor: [14, 35],  // the same for the shadow
                 popupAnchor:  [-14, -35] // point from which the popup should open relative to the iconAnchor
             });
-                L.marker([55.653503, 37.593950], {icon: innoterIcon}).addTo(map).bindPopup("Я - офис Иннотер!");
+                L.marker([55.653503, 37.593950], {icon: innoterIcon}).addTo(map).bindPopup("Я - офис Иннотер!")
+                        .openPopup()
             }
 
     </script>
@@ -165,7 +178,8 @@ var map = L.map('map', {center: [60.0, 40.0], zoom: 4, layers: openStreetMap});
 <body onload="mapinit()">
     <h1 class="block-title"><span style="color: #b02022; "><b>Геопортал Иннотер</b></span></h1>
     <div><img src="graphics/logo_text_ru.png" alt="Innoter logo" title="Innoter.com" height="60" width="300"></div>
-    <button onclick="addI()"><b>Показать офис Иннотер</b></button>
+    <button class="pure-button pure-button-primary"><b>Где мы?</b></button>
+    <button onclick="addI()"><b>А где Иннотер?</b></button>
     <div id="map"></div>
 </body>
 </html>
