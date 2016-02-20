@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/leaflet.css" />
     <link rel="stylesheet" href="css/Leaflet.Coordinates-0.1.5.css" />
     <link rel="stylesheet" href="css/leaflet-panel-layers.src.css" />
+    <link rel="stylesheet" href="css/icons.css" />
     <script src="js/leaflet.js"></script>
     <script src="js/Leaflet.Coordinates-0.1.5.src.js"></script>
     <script src="js/leaflet-panel-layers.src.js"></script>
@@ -63,6 +64,10 @@
 map = L.map('map', {center: [54.0, 29.0], zoom: 4, layers: blackMap});
 
 
+function iconByName(name) {
+    return '<i class="icon icon-' + name + '"></i>';
+}
+
     var baseLayers = [
         {
             group: "Карт-основа",
@@ -86,10 +91,12 @@ map = L.map('map', {center: [54.0, 29.0], zoom: 4, layers: blackMap});
             layers: [
                 {
                     name: "покрыте GeoEye-1",
+                    icon: iconByName('GE1'),
                     layer: wmsGE
                 },
                 {
                     name: "покрытие World View-2",
+                    icon: iconByName('WV2'),
                     layer: wmsWV2
                 }
             ]
@@ -99,6 +106,7 @@ map = L.map('map', {center: [54.0, 29.0], zoom: 4, layers: blackMap});
             layers: [
                 {
                     name: "квиклуки GeoEye-1",
+                    icon: iconByName('QL'),
                     layer: wmsQL
                 }
 
@@ -109,6 +117,7 @@ map = L.map('map', {center: [54.0, 29.0], zoom: 4, layers: blackMap});
             layers: [
                 {
                     name: "Возгорания за 24ч (MODIS)",
+                    icon: iconByName('Fire'),
                     layer: wmsFires
                 }
 
