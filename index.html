@@ -30,6 +30,12 @@
 
             openStreetMap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png'),
 
+            mapquestOSM = L.tileLayer("https://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png", {
+                maxZoom: 19,
+                subdomains: ["otile1-s", "otile2-s", "otile3-s", "otile4-s"],
+                attribution: ''
+            }),
+
             wmsGE = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
                 layers: 'Geoportal:GeoEye_2016',
                 format: 'image/png',
@@ -77,6 +83,11 @@ function iconByName(name) {
                     active: true,
                     name: "<b>Фирменная подложка</b>",
                     layer: blackMap
+                },
+                {
+                    active: false,
+                    name: "<b>MapQuest</b>",
+                    layer: mapquestOSM
                 },
                 {
                     active: false,
@@ -233,10 +244,12 @@ var ajax = $.ajax({
     </script>
 </head>
 <body onload="mapinit()">
-    <h1 class="block-title"><span style="color: #b02022; "><b>Геопортал Иннотер</b></span></h1>
-    <div><img src="graphics/logo_text_ru.png" alt="Innoter logo" title="Innoter.com" height="60" width="300"></div>
-    <button class="pure-button pure-button-primary"><b>Где мы?</b></button>
-    <button onclick="addI()"><b>А где Иннотер?</b></button>
+    <h1 class="block-title"><span style="color: #b02022"><b>Геопортал Иннотер</b></span></h1>
+    <div><img src="images/logo_text_ru.png" alt="Innoter logo" title="Innoter.com"></div>
+    <div class="buttons">
+        <button class="pure-button pure-button-primary"><b>Где мы?</b></button>
+        <button onclick="addI()"><b>А где Иннотер?</b></button>
+    </div>
     <div id="map"></div>
 </body>
 </html>
