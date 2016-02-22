@@ -60,6 +60,14 @@
                 attribution: "myattribution"
             }),
 
+            wmsWV3 = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
+                layers: 'Geoportal:WV03',
+                format: 'image/png',
+                transparent: true,
+                version: '1.1.0',
+                attribution: "myattribution"
+            }),
+
             wmsFires = L.tileLayer.wms("http://firms.modaps.eosdis.nasa.gov/wms/c6", {
                 layers: 'fires24',
                 format: 'image/png',
@@ -120,6 +128,11 @@ function iconByName(name) {
                     name: "квиклуки GeoEye-1",
                     icon: iconByName('QL'),
                     layer: wmsQL
+                },
+                {
+                    name: "квиклуки World View-3",
+                    icon: iconByName('QL'),
+                    layer: wmsWV3
                 }
 
             ]
