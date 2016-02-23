@@ -8,15 +8,16 @@
     <link rel="stylesheet" href="css/Leaflet.Coordinates-0.1.5.css" />
     <link rel="stylesheet" href="css/leaflet-panel-layers.src.css" />
     <link rel="stylesheet" href="css/icons.css" />
-    <script src="js/leaflet.js"></script>
-    <script src="js/Leaflet.Coordinates-0.1.5.src.js"></script>
-    <script src="js/leaflet-panel-layers.src.js"></script>
-    <script src="js/catiline.js"></script>
-    <script src="js/leaflet.shpfile.js"></script>
-    <script src="js/shp.js"></script>
-    <script src="js/jquery-1.12.0.min.js"></script>
 
-
+</head>
+<body onload="mapinit()">
+    <h1 class="block-title"><span style="color: #b02022"><b>Геопортал Иннотер</b></span></h1>
+    <div><img src="images/logo_text_ru.png" alt="Innoter logo" title="Innoter.com"></div>
+    <div class="buttons">
+        <button class="pure-button pure-button-primary"><b>Где мы?</b></button>
+        <button onclick="addI()"><b>А где Иннотер?</b></button>
+    </div>
+    <div id="map"></div>
     <script>
         // создаём объект карты
         function mapinit() {
@@ -255,14 +256,13 @@ var ajax = $.ajax({
             }
 
     </script>
-</head>
-<body onload="mapinit()">
-    <h1 class="block-title"><span style="color: #b02022"><b>Геопортал Иннотер</b></span></h1>
-    <div><img src="images/logo_text_ru.png" alt="Innoter logo" title="Innoter.com"></div>
-    <div class="buttons">
-        <button class="pure-button pure-button-primary"><b>Где мы?</b></button>
-        <button onclick="addI()"><b>А где Иннотер?</b></button>
-    </div>
-    <div id="map"></div>
+
+    <script src="js/leaflet.js"></script>
+    <script src="js/Leaflet.Coordinates-0.1.5.src.js"></script>
+    <script src="js/leaflet-panel-layers.src.js"></script>
+    <script src="js/catiline.js"></script>
+    <script src="js/leaflet.shpfile.js"></script>
+    <script src="js/shp.js"></script>
+    <script src="js/jquery-1.12.0.min.js"></script>
 </body>
 </html>
