@@ -19,6 +19,18 @@
 .icon-Fire {
 	background: url('../images/icons/Fire.png') center center no-repeat;
 }
+.icon-Humidity {
+	background: url('../images/icons/Humidity.png') center center no-repeat;
+}
+.icon-Rain {
+	background: url('../images/icons/Rain.png') center center no-repeat;
+}
+.icon-Temperature {
+	background: url('../images/icons/Temperature.png') center center no-repeat;
+}
+.icon-Wind {
+	background: url('../images/icons/Wind.png') center center no-repeat;
+}
 
 /* MARKERS */
 .leaflet-marker-icon {

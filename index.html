@@ -37,6 +37,46 @@
                 attribution: ''
             }),
 
+            MapQuestOpen_Aerial = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.{ext}', {
+                type: 'sat',
+                ext: 'jpg',
+                attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency',
+                subdomains: '1234'
+            }),
+
+            Stamen_Watercolor = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+                attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                subdomains: 'abcd',
+                minZoom: 1,
+                maxZoom: 16,
+                ext: 'png'
+            }),
+
+            OpenWeatherMap_RainClassic = L.tileLayer('http://{s}.tile.openweathermap.org/map/rain_cls/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
+                opacity: 0.5
+            }),
+            OpenWeatherMap_Clouds = L.tileLayer('http://{s}.tile.openweathermap.org/map/clouds/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
+                opacity: 0.5
+            }),
+            OpenWeatherMap_Temperature = L.tileLayer('http://{s}.tile.openweathermap.org/map/temp/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
+                opacity: 0.5
+            }),
+            OpenWeatherMap_Wind = L.tileLayer('http://{s}.tile.openweathermap.org/map/wind/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
+                opacity: 0.5
+            }),
+            OpenWeatherMap_Precipitation = L.tileLayer('http://{s}.tile.openweathermap.org/map/precipitation/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
+                opacity: 0.5
+            }),
             wmsGE = L.tileLayer.wms("http://192.168.0.117:8080/geoserver/Geoportal/wms", {
                 layers: 'Geoportal:GeoEye_2016',
                 format: 'image/png',
@@ -100,9 +140,15 @@ function iconByName(name) {
                 },
                 {
                     active: false,
-                    name: "<b>OpenStreetMap</b>",
-                    layer: openStreetMap
-                }]
+                    name: "<b>OpenAerial</b>",
+                    layer: MapQuestOpen_Aerial
+                },
+                {
+                    active: false,
+                    name: "<b>Акварель (Stamen)</b>",
+                    layer: Stamen_Watercolor
+                }
+            ]
         }
     ];
 
@@ -150,12 +196,27 @@ function iconByName(name) {
             ]
         },
         {
-            group: "Временные слои",
+            group: "Погода",
             layers: [
                 {
-                    name: "возгорания за 24ч (MODIS)",
-                    icon: iconByName('Fire'),
-                    layer: wmsFires
+                    name: "Влажность воздуха",
+                    icon: iconByName('Humidity'),
+                    layer: OpenWeatherMap_Precipitation
+                },
+                {
+                    name: "Осадки",
+                    icon: iconByName('Rain'),
+                    layer: OpenWeatherMap_RainClassic
+                },
+                {
+                    name: "Температура воздуха",
+                    icon: iconByName('Temperature'),
+                    layer: OpenWeatherMap_Temperature
+                },
+                {
+                    name: "Скорость ветра",
+                    icon: iconByName('Wind'),
+                    layer: OpenWeatherMap_Wind
                 }
 
             ]
