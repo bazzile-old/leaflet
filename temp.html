@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaflet Test</title>
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+
+
+</head>
+<body>
+    <div id="map" style="width: 705px; height: 375px"></div>
+    <!-- Add the Leaflet JavaScript library -->
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <script>
+        // Create variable to hold map element, give initial settings to map
+        var map = L.map('map',{ center: [42.362432, -71.086086], zoom: 14});
+        // Add OpenStreetMap tile layer to map element
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
+    </script>
+</body>
+</html>
