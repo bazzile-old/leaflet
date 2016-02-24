@@ -13,8 +13,8 @@
 <body onload="mapinit()">
     <h1 class="block-title"><span style="color: #b02022"><b>Геопортал Иннотер</b></span></h1>
     <div><img src="images/logo_text_ru.png" alt="Innoter logo" title="Innoter.com"></div>
-    <div class="buttons">
-        <button class="pure-button pure-button-primary"><b>Где мы?</b></button>
+    <div class="buttons" style="margin: 15px;">
+        <button id="Locator"><b>Где мы?</b></button>
         <button onclick="addI()"><b>А где Иннотер?</b></button>
     </div>
     <div id="map"></div>
@@ -292,15 +292,21 @@ var ajax = $.ajax({
 
 
             // определение местоположения
-            $('.pure-button').on('click', function(){
-              map.locate({setView: true, maxZoom: 11});
-            });
-
+            document.getElementById("Locator").addEventListener("click", toggleLocation);
+            function toggleLocation() {
+                if (map.hasLayer(myLocation)) {
+                    map.removeLayer(myLocation)
+                }
+                else {
+                map.locate({setView: true, maxZoom: 11});
+                }
+            }
+            var myLocation = null;
             map.on('locationfound', onLocationFound);
             function onLocationFound(e) {
-                L.marker(e.latlng).addTo(map).bindPopup("<b>Мы - вот тут</b>").openPopup();
+                myLocation = L.marker(e.latlng).addTo(map).bindPopup("<b>Мы - вот тут</b>").openPopup();
             }}
-
+            var innoterLocation = null;
             function addI() {
             var innoterIcon = L.icon({
                 iconUrl: 'css/images/Innoter_logo.png',
@@ -312,11 +318,16 @@ var ajax = $.ajax({
                 shadowAnchor: [14, 35],  // the same for the shadow
                 popupAnchor:  [-14, -35] // point from which the popup should open relative to the iconAnchor
             });
-                L.marker([55.653503, 37.593950], {icon: innoterIcon}).addTo(map).bindPopup('<b>Я - офис Иннотер!</b>' +
+                if (map.hasLayer(innoterLocation)) {
+                    map.removeLayer(innoterLocation)
+                }
+                else {
+                innoterLocation = L.marker([55.653503, 37.593950], {icon: innoterIcon}).addTo(map).bindPopup('<b>Я - офис Иннотер!</b>' +
                         '<br><i>Мой адрес в сети:</i> <a href="https://innoter.com/">innoter.com</a>' +
                         '<br><i>И телефон для связи:</i> +7 495 245-04-24' +
                         '<img src="images/EarthSpin.gif" align="center" width="40%" height="40%">')
                         .openPopup()
+                }
             }
 
     </script>
