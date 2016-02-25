@@ -292,7 +292,8 @@ var ajax = $.ajax({
 
 
             // определение местоположения
-            document.getElementById("Locator").addEventListener("click", toggleLocation);
+            //document.getElementById("Locator").addEventListener("click", toggleLocation);
+            $("#Locator").click(toggleLocation);
             function toggleLocation() {
                 if (map.hasLayer(myLocation)) {
                     map.removeLayer(myLocation)
