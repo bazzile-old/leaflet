@@ -14,74 +14,14 @@
         <button id="addButton">add Coffee Shops</button>
     </div>
     <!-- Add the Leaflet JavaScript library -->
-    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <script src="js/leaflet.js"></script>
     <script>
-        // set coffee shop dataset to variable coffeeShops
-        var coffeeShops = {
-            "type": "FeatureCollection",
-            "features": [
-                {
-                    "type": "Feature",
-                    "properties": {
-                        "name": "Dunkin Donuts",
-                        "address": "1 Broadway #1, Cambridge, MA 02142",
-                                        "latitude": 42.362504,
-                        "longitude": -71.083372
-                    },
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [-71.083372, 42.362504]
-                    }
-                },
-                {
-                    "type": "Feature",
-                    "properties": {
-                        "name": "Starbucks",
-                        "address": "6 Cambridge Center, Cambridge, MA 02142",
-                                        "latitude": 42.363884,
-                        "longitude": -71.087749
-                    },
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [-71.087749, 42.363884]
-                    }
-                }
-            ]
-        };
         // Create variable to hold map element, give initial settings to map
-        var map = L.map('map',{ center: [42.362432, -71.086086], zoom: 14 });
+        var map = L.map('map',{center: [42.362432, -71.086086], zoom: 14 });
         // Add OpenStreetMap tile layer to map element
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
-        // Create object with coffeeshop points
-        var CoffeeShopPoints = L.geoJson(coffeeShops, {
-            onEachFeature: function fuck(feature, layer) {
-                layer.bindPopup(feature.properties.name)
-            }
-        });
-        // create an empty popup element
-        var popup = L.popup();
 
-        // write a function that will populate the popup element using methods from the popup object
-        function onMapClick(r) {
-            popup
-                .setLatLng(r.latlng)
-                .setContent("You clicked the map at " + r.latlng.toString())
-                .openOn(map);
-        }
 
-        // on click, run function to populate popup and open it on the map
-        map.on('click', onMapClick);
-        // Create event listener for the Add Coffee Shops Button
-        document.getElementById("addButton").addEventListener("click", toggleCoffeeShops);
-        // add coffee shops function
-        function toggleCoffeeShops() {
-            if (map.hasLayer(CoffeeShopPoints)) {
-                map.removeLayer(CoffeeShopPoints)
-            }
-            else {
-                CoffeeShopPoints.addTo(map)
-            }
-        }
     </script>
 </body>
 </html>

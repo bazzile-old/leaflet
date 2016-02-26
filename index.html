@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/Leaflet.Coordinates-0.1.5.css" />
     <link rel="stylesheet" href="css/leaflet-panel-layers.src.css" />
     <link rel="stylesheet" href="css/icons.css" />
+    <link rel="stylesheet" href="css/leaflet.draw.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
@@ -23,6 +24,7 @@
     <script src="js/leaflet.js"></script>
     <script src="js/Leaflet.Coordinates-0.1.5.src.js"></script>
     <script src="js/leaflet-panel-layers.src.js"></script>
+    <script src="js/leaflet.draw.js"></script>
     <script src="js/catiline.js"></script>
     <script src="js/leaflet.shpfile.js"></script>
     <script src="js/shp.js"></script>
@@ -243,6 +245,58 @@
 
         // добавляем шкалу масштаба
         L.control.scale({position: 'bottomleft', imperial: false, maxWidth: 100}).addTo(map);
+
+        // добавляем инструменты рисования форм
+        // Initialise the FeatureGroup to store editable layers
+		var drawnItems = new L.FeatureGroup();
+		map.addLayer(drawnItems);
+
+		// Set the title to show on the polygon button
+		L.drawLocal.draw.toolbar.buttons.polygon = 'Draw a sexy polygon!';
+        // Initialise the draw control and pass it the FeatureGroup of editable layers
+		var drawControl = new L.Control.Draw({
+			draw: {
+				polyline: {
+					metric: true
+				},
+				polygon: {
+                    metric: true,
+					allowIntersection: false,
+					showArea: true,
+					drawError: {
+						color: '#b00b00',
+						timeout: 1000
+					},
+					shapeOptions: {
+						color: '#bada55'
+					}
+				},
+				circle: {
+					shapeOptions: {
+						color: '#662d91'
+					}
+				},
+				marker: true
+			},
+			edit: {
+				featureGroup: drawnItems
+			}
+		});
+		map.addControl(drawControl);
+
+		map.on('draw:created', function (e) {
+			var type = e.layerType,
+				layer = e.layer;
+
+			if (type === 'marker') {
+                // Do marker specific actions
+			}
+            // Do whatever else you need to. (save to db, add to map etc)
+			drawnItems.addLayer(layer);
+		});
+
+
+
 
         // добавляем WFS с атрибутами снимков
         var owsrootUrl = 'http://192.168.0.117:8080/geoserver/ows';
