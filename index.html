@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/leaflet-panel-layers.src.css" />
     <link rel="stylesheet" href="css/icons.css" />
     <link rel="stylesheet" href="css/leaflet.draw.css" />
+    <link rel="stylesheet" href="css/Control.MiniMap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
@@ -25,9 +26,10 @@
     <script src="js/Leaflet.Coordinates-0.1.5.src.js"></script>
     <script src="js/leaflet-panel-layers.src.js"></script>
     <script src="js/leaflet.draw-src.js"></script>
-    <script src="js/catiline.js"></script>
+    <script src="js/leaflet.filelayer.js"></script>
     <script src="js/leaflet.shpfile.js"></script>
     <script src="js/shp.js"></script>
+    <script src="js/Control.MiniMap.js"></script>
     <script src="js/jquery-1.12.0.min.js"></script>
     <script>
         // создаём объект карты
@@ -252,13 +254,11 @@
 		map.addLayer(drawnItems);
 
 		// Set the title to show on the polygon button
-		L.drawLocal.draw.toolbar.buttons.polygon = 'Draw a sexy polygon!';
+		//L.drawLocal.draw.toolbar.buttons.polygon = 'Draw a sexy polygon!';
         // Initialise the draw control and pass it the FeatureGroup of editable layers
 		var drawControl = new L.Control.Draw({
 			draw: {
-				polyline: {
-					metric: true
-				},
+				polyline: false,
 				polygon: {
                     metric: true,
 					allowIntersection: false,
@@ -271,11 +271,7 @@
 						color: '#bada55'
 					}
 				},
-				circle: {
-					shapeOptions: {
-						color: '#662d91'
-					}
-				},
+				circle: false,
 				marker: true
 			},
 			edit: {
@@ -295,6 +291,49 @@
 			drawnItems.addLayer(layer);
 		});
 
+//    // добавление загрузки файлов
+//    L.Control.fileLayerLoad({
+//        // See http://leafletjs.com/reference.html#geojson-options
+//        layerOptions: {style: {color:'red'}},
+//        // Add to map after loading (default: true) ?
+//        addToMap: true,
+//        // File size limit in kb (default: 1024) ?
+//        fileSizeLimit: 1024,
+//        // Restrict accepted file formats (default: .geojson, .kml, and .gpx) ?
+//        formats: [
+//            '.geojson',
+//            '.kml'
+//        ]
+//    }).addTo(map);
+
+        // добавляем миникарту
+        var osm2 = new L.TileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {minZoom: 0, maxZoom: 13, attribution: 'none'});
+		var miniMapOptions = {
+            position: "bottomleft",
+			toggleDisplay: true,
+			strings: {
+				hideText: 'Скрыть мини-карту',
+				showText: 'Показать мини-карту'
+			}
+		};
+		var miniMap = new L.Control.MiniMap(osm2, miniMapOptions).addTo(map);
+
+
+
+
+//        // добавляем shp-файл
+//        var shpfile = new L.Shapefile('myFile.zip', {
+//			onEachFeature: function(feature, layer) {
+//				if (feature.properties) {
+//					layer.bindPopup(Object.keys(feature.properties).map(function(k) {
+//						return k + ": " + feature.properties[k];
+//					}).join("<br />"), {
+//						maxHeight: 200
+//					});
+//				}
+//			}
+//		});
+//        shpfile.addTo(map);
 
 
 

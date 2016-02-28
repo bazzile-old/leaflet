@@ -16,19 +16,19 @@ L.drawLocal = {
 	draw: {
 		toolbar: {
 			actions: {
-				title: 'Cancel drawing',
-				text: 'Cancel'
+				title: 'Отменить добавление объекта',
+				text: 'Назад'
 			},
 			undo: {
-				title: 'Delete last point drawn',
-				text: 'Delete last point'
+				title: 'Удалить крайнюю из добавленных точек',
+				text: 'Убрать точку'
 			},
 			buttons: {
-				polyline: 'Draw a polyline',
-				polygon: 'Draw a polygon',
-				rectangle: 'Draw a rectangle',
-				circle: 'Draw a circle',
-				marker: 'Draw a marker'
+				polyline: 'Нанести на карту полилинию',
+				polygon: 'Нанести на карту полигон',
+				rectangle: 'Нанести на карту прямоугольник',
+				circle: 'Нанести на карту окружность',
+				marker: 'Добавить маркер'
 			}
 		},
 		handlers: {
@@ -40,18 +40,18 @@ L.drawLocal = {
 			},
 			marker: {
 				tooltip: {
-					start: 'Click map to place marker.'
+					start: 'Нажми на карту для добавления маркера.'
 				}
 			},
 			polygon: {
 				tooltip: {
-					start: 'Click to start drawing shape.',
-					cont: 'Click to continue drawing shape.',
-					end: 'Click first point to close this shape.'
+					start: 'Нажмите, чтобы начать рисовать.',
+					cont: 'Нажмите, чтобы продолжить контур.',
+					end: 'Чтобы замкнуть контур, кликинте дважды (или нажмите на начальную точку).'
 				}
 			},
 			polyline: {
-				error: '<strong>Error:</strong> shape edges cannot cross!',
+				error: '<strong>Ошибка:</strong> полигон не может пересекать сам себя!',
 				tooltip: {
 					start: 'Click to start drawing line.',
 					cont: 'Click to continue drawing line.',
@@ -60,12 +60,12 @@ L.drawLocal = {
 			},
 			rectangle: {
 				tooltip: {
-					start: 'Click and drag to draw rectangle.'
+					start: 'Нажмите на карту и растяните прямоугольник.'
 				}
 			},
 			simpleshape: {
 				tooltip: {
-					end: 'Release mouse to finish drawing.'
+					end: 'Отпустите мышь, чтобы закончить нанесение.'
 				}
 			}
 		}
@@ -74,12 +74,12 @@ L.drawLocal = {
 		toolbar: {
 			actions: {
 				save: {
-					title: 'Save changes.',
-					text: 'Save'
+					title: 'Сохранить изменения.',
+					text: 'Сохранить'
 				},
 				cancel: {
-					title: 'Cancel editing, discards all changes.',
-					text: 'Cancel'
+					title: 'Отменить удаление (сброс всех изменений).',
+					text: 'Отмена'
 				}
 			},
 			buttons: {
@@ -92,13 +92,13 @@ L.drawLocal = {
 		handlers: {
 			edit: {
 				tooltip: {
-					text: 'Drag handles, or marker to edit feature.',
-					subtext: 'Click cancel to undo changes.'
+					text: 'Чтобы изменить контур - перемещайте узлы.',
+					subtext: 'Нажмите "Отмена", чтобы отменить изменения.'
 				}
 			},
 			remove: {
 				tooltip: {
-					text: 'Click on a feature to remove'
+					text: 'Чтобы удалить объект - просто кликините на него'
 				}
 			}
 		}
@@ -1790,7 +1790,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
 		if (isMetric) {
 			if (area >= 10000) {
-				areaStr = (area * 0.0001).toFixed(2) + ' ha';
+				areaStr = (area * 0.0001).toFixed(2) + ' Га';
 			} else {
 				areaStr = area.toFixed(2) + ' m&sup2;';
 			}

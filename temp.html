@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Leaflet Test</title>
     <!-- External Stylesheets -->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/Control.MiniMap.min.css" />
 
 
 </head>
@@ -15,12 +16,18 @@
     </div>
     <!-- Add the Leaflet JavaScript library -->
     <script src="js/leaflet.js"></script>
+    <script src="js/leaflet.shpfile.js"></script>
+    <script src="js/jquery-1.12.0.min.js"></script>
+    <script src="js/shp.js"></script>
+    <script src="js/Control.MiniMap.min.js"></script>
     <script>
         // Create variable to hold map element, give initial settings to map
-        var map = L.map('map',{center: [42.362432, -71.086086], zoom: 14 });
+        var map = L.map('map',{center: [42.362432, -71.086086], zoom: 10 });
         // Add OpenStreetMap tile layer to map element
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
 
+        var osm2 = new L.TileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {minZoom: 0, maxZoom: 13, attribution: 'none'});
+        var miniMap = new L.Control.MiniMap(osm2, {position: "bottomleft", toggleDisplay: true}).addTo(map);
 
     </script>
 </body>
