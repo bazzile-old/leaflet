@@ -30,6 +30,7 @@
     <script src="js/leaflet.shpfile.js"></script>
     <script src="js/shp.js"></script>
     <script src="js/Control.MiniMap.js"></script>
+    <script src="js/LeafletToWKT.js"></script>
     <script src="js/jquery-1.12.0.min.js"></script>
     <script>
         // создаём объект карты
@@ -284,11 +285,20 @@
 			var type = e.layerType,
 				layer = e.layer;
 
+            alert(toWKT(layer));
+
 			if (type === 'marker') {
                 // Do marker specific actions
 			}
             // Do whatever else you need to. (save to db, add to map etc)
 			drawnItems.addLayer(layer);
+//            drawnItems.eachLayer(function(layer) {
+//              layer.on('click', function(){
+//                alert(this._leaflet_id)
+//              });
+//            });
+            //alert(layer._leaflet_id);
+
 		});
 
 //    // добавление загрузки файлов
@@ -335,7 +345,7 @@
 //		});
 //        shpfile.addTo(map);
 
-
+ //CQL запрос к Ge cloudcover = 0 and platform = 'GE01' and INTERSECTS(geom, Polygon ((0 0, 10 0, 10 10, 0 10, 0 0)))
 
         // добавляем WFS с атрибутами снимков
         var owsrootUrl = 'http://192.168.0.117:8080/geoserver/ows';
@@ -346,7 +356,11 @@
             request : 'GetFeature',
             typeName : 'Geoportal:GeoEye_2016',
             outputFormat : 'text/javascript',
+            cql_filter : "PLATFORM='GE01' and IMAGEBANDS='Pan_MS1' and DISJOINT(the_geom, POLYGON((36.63 " +
+            "55.19,36.63 56.12,39.28 56.12,39.28 " +
+            "55.19,36.63 55.19)))",
             format_options : 'callback:getJson',
+
             SrsName : 'EPSG:4326'
         };
         var parameters = L.Util.extend(defaultParameters);
@@ -363,7 +377,7 @@
                         return {
                             stroke: false,
                             fillColor: 'FFFFFF',
-                            fillOpacity: 0
+                            fillOpacity: 1
                         };
                     },
                     onEachFeature: function (feature, layer) {

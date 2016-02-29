@@ -19,15 +19,61 @@
     <script src="js/leaflet.shpfile.js"></script>
     <script src="js/jquery-1.12.0.min.js"></script>
     <script src="js/shp.js"></script>
-    <script src="js/Control.MiniMap.min.js"></script>
+    <script src="js/Control.MiniMap.js"></script>
     <script>
         // Create variable to hold map element, give initial settings to map
-        var map = L.map('map',{center: [42.362432, -71.086086], zoom: 10 });
+        var map = L.map('map',{center: [54.0, 29.0], zoom: 6});
         // Add OpenStreetMap tile layer to map element
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
 
         var osm2 = new L.TileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {minZoom: 0, maxZoom: 13, attribution: 'none'});
         var miniMap = new L.Control.MiniMap(osm2, {position: "bottomleft", toggleDisplay: true}).addTo(map);
+
+
+        var URL = 'http://192.168.0.117:8080/geoserver/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=' +
+                'Geoportal:GeoEye_2016&outputFormat=text/javascript&format_options=callback:getJson' +
+                '&SrsName=EPSG:4326&cql_filter=INTERSECTS(the_geom, POLYGON((40.70709228515625 56.60239283153176,' +
+                '40.70709228515625 56.87504697464234,41.21246337890625 56.87504697464234,41.21246337890625 ' +
+                '56.60239283153176,40.70709228515625 56.60239283153176)))';
+
+        var defaultParameters = {
+            service : 'WFS',
+            version : '2.0',
+            request : 'GetFeature',
+            typeName : 'Geoportal:GeoEye_2016',
+            outputFormat : 'text/javascript',
+            format_options : 'callback:getJson',
+
+            SrsName : 'EPSG:4326'
+        };
+
+
+        var WFSLayer = null;
+        var ajax = $.ajax({
+            url : URL,
+            dataType : 'jsonp',
+            jsonpCallback : 'getJson',
+            success : function (response) {
+                WFSLayer = L.geoJson(response, {
+                    style: function () {
+                        return {
+                            stroke: false,
+                            fillColor: 'FFFFFF',
+                            fillOpacity: 1
+                        };
+                    },
+                    onEachFeature: function (feature, layer) {
+                        popupOptions = {maxWidth: 250};
+                        layer.bindPopup((
+                        "Сенсор: " + feature.properties.PLATFORM.bold() +
+                        "<br>Номер снимка: " + feature.properties.CATALOGID.bold() +
+                        "<br>Дата съёмки: " + feature.properties.ACQDATE.bold() +
+                        "<br>Отклонение от надира: " + feature.properties.AVOFFNADIR + "°")
+                            ,popupOptions);
+                    }
+                }).addTo(map);
+            }
+        });
 
     </script>
 </body>
