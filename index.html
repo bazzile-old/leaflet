@@ -291,20 +291,20 @@
 			drawnItems.addLayer(layer);
 		});
 
-//    // добавление загрузки файлов
-//    L.Control.fileLayerLoad({
-//        // See http://leafletjs.com/reference.html#geojson-options
-//        layerOptions: {style: {color:'red'}},
-//        // Add to map after loading (default: true) ?
-//        addToMap: true,
-//        // File size limit in kb (default: 1024) ?
-//        fileSizeLimit: 1024,
-//        // Restrict accepted file formats (default: .geojson, .kml, and .gpx) ?
-//        formats: [
-//            '.geojson',
-//            '.kml'
-//        ]
-//    }).addTo(map);
+    // добавление загрузки файлов
+    L.Control.fileLayerLoad({
+        // See http://leafletjs.com/reference.html#geojson-options
+        layerOptions: {style: {color:'red'}},
+        // Add to map after loading (default: true) ?
+        addToMap: true,
+        // File size limit in kb (default: 1024) ?
+        fileSizeLimit: 1024,
+        // Restrict accepted file formats (default: .geojson, .kml, and .gpx) ?
+        formats: [
+            '.geojson',
+            '.kml'
+        ]
+    }).addTo(map);
 
         // добавляем миникарту
         var osm2 = new L.TileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {minZoom: 0, maxZoom: 13, attribution: 'none'});
@@ -335,6 +335,8 @@
 //		});
 //        shpfile.addTo(map);
 
+
+        //CQL запрос к Ge cloudcover = 0 and platform = 'GE01' and INTERSECTS(geom, Polygon ((0 0, 10 0, 10 10, 0 10, 0 0)))
 
 
         // добавляем WFS с атрибутами снимков
