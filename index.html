@@ -19,6 +19,7 @@
     <div class="buttons" style="margin: 15px;">
         <button id="Locator"><b>Где мы?</b></button>
         <button id="InnoLocator"><b>А где Иннотер?</b></button>
+        <button id="WKT"><b>Показать WKT объекта</b></button>
     </div>
     <div id="map"></div>
 
@@ -280,12 +281,13 @@
 			}
 		});
 		map.addControl(drawControl);
-
+        var WKT = null;
 		map.on('draw:created', function (e) {
 			var type = e.layerType,
 				layer = e.layer;
 
-            alert(toWKT(layer));
+            WKT = toWKT(layer);
+            alert(WKT);
 
 			if (type === 'marker') {
                 // Do marker specific actions
@@ -348,18 +350,17 @@
  //CQL запрос к Ge cloudcover = 0 and platform = 'GE01' and INTERSECTS(geom, Polygon ((0 0, 10 0, 10 10, 0 10, 0 0)))
 
         // добавляем WFS с атрибутами снимков
-        var owsrootUrl = 'http://192.168.0.117:8080/geoserver/ows';
+        var owsrootUrl = 'http://192.168.0.117:8080/geoserver/Geoportal/ows';
 
         var defaultParameters = {
             service : 'WFS',
             version : '2.0',
             request : 'GetFeature',
-            typeName : 'Geoportal:GeoEye_2016',
+            typeName : 'Geoportal:WorldView2_2015',
             outputFormat : 'text/javascript',
-            cql_filter : "PLATFORM='GE01' and IMAGEBANDS='Pan_MS1' and DISJOINT(the_geom, POLYGON((36.63 " +
-            "55.19,36.63 56.12,39.28 56.12,39.28 " +
-            "55.19,36.63 55.19)))",
+            cql_filter : "INTERSECTS(the_geom, POLYGON((55.62930103908055 37.42218017578125,55.76667257383551 37.42218017578125,55.76667257383551 37.920684814453125,55.62930103908055 37.920684814453125,55.62930103908055 37.42218017578125)))",
             format_options : 'callback:getJson',
+            //maxFeatures : '25',
 
             SrsName : 'EPSG:4326'
         };
@@ -375,9 +376,11 @@
                 WFSLayer = L.geoJson(response, {
                     style: function () {
                         return {
-                            stroke: false,
+                            stroke: true,
+                            color: '#FF0000',
+                            //opacity: 1,
                             fillColor: 'FFFFFF',
-                            fillOpacity: 1
+                            fillOpacity: 0
                         };
                     },
                     onEachFeature: function (feature, layer) {
@@ -432,6 +435,11 @@
                 .openPopup();
             map.panTo(innoterLocation.getLatLng());
         }}
+
+        $("#WKT").click(flashWKT);
+        function flashWKT() {
+            alert(WKT)
+        }
 
     </script>
 </body>

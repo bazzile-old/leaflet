@@ -22,7 +22,7 @@
     <script src="js/Control.MiniMap.js"></script>
     <script>
         // Create variable to hold map element, give initial settings to map
-        var map = L.map('map',{center: [54.0, 29.0], zoom: 6});
+        var map = L.map('map',{center: [55.7, 37.6], zoom: 7});
         // Add OpenStreetMap tile layer to map element
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
 
@@ -30,22 +30,22 @@
         var miniMap = new L.Control.MiniMap(osm2, {position: "bottomleft", toggleDisplay: true}).addTo(map);
 
 
-        var URL = 'http://192.168.0.117:8080/geoserver/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=' +
-                'Geoportal:GeoEye_2016&outputFormat=text/javascript&format_options=callback:getJson' +
-                '&SrsName=EPSG:4326&cql_filter=INTERSECTS(the_geom, POLYGON((40.70709228515625 56.60239283153176,' +
-                '40.70709228515625 56.87504697464234,41.21246337890625 56.87504697464234,41.21246337890625 ' +
-                '56.60239283153176,40.70709228515625 56.60239283153176)))';
+        var owsrootUrl = 'http://192.168.0.117:8080/geoserver/ows';
 
         var defaultParameters = {
             service : 'WFS',
             version : '2.0',
             request : 'GetFeature',
-            typeName : 'Geoportal:GeoEye_2016',
+            typeName : 'Geoportal:WorldView2_2016',
+            maxFeatures : '5',
             outputFormat : 'text/javascript',
+            cql_filter : "INTERSECTS(the_geom, POLYGON((55.62930103908055 37.42218017578125,55.76667257383551 37.42218017578125,55.76667257383551 37.920684814453125,55.62930103908055 37.920684814453125,55.62930103908055 37.42218017578125)))",
             format_options : 'callback:getJson',
 
             SrsName : 'EPSG:4326'
         };
+        var parameters = L.Util.extend(defaultParameters);
+        var URL = owsrootUrl + L.Util.getParamString(parameters);
 
 
         var WFSLayer = null;
