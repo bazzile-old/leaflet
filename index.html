@@ -20,6 +20,8 @@
         <button id="Locator"><b>Где мы?</b></button>
         <button id="InnoLocator"><b>А где Иннотер?</b></button>
         <button id="WKT"><b>Показать WKT объекта</b></button>
+        <button id="WV2015"><b>Показать слой WV2_2015</b></button>
+        <button id="Cleaner"><b>Очистить слои</b></button>
     </div>
     <div id="map"></div>
 
@@ -287,7 +289,7 @@
 				layer = e.layer;
 
             WKT = toWKT(layer);
-            alert(WKT);
+            //alert(WKT);
 
 			if (type === 'marker') {
                 // Do marker specific actions
@@ -348,53 +350,60 @@
 //        shpfile.addTo(map);
 
  //CQL запрос к Ge cloudcover = 0 and platform = 'GE01' and INTERSECTS(geom, Polygon ((0 0, 10 0, 10 10, 0 10, 0 0)))
+        $("#WV2015").click(addWV2015);
 
         // добавляем WFS с атрибутами снимков
         var owsrootUrl = 'http://192.168.0.117:8080/geoserver/Geoportal/ows';
-
-        var defaultParameters = {
-            service : 'WFS',
-            version : '2.0',
-            request : 'GetFeature',
-            typeName : 'Geoportal:WorldView2_2015',
-            outputFormat : 'text/javascript',
-            cql_filter : "INTERSECTS(the_geom, POLYGON((55.62930103908055 37.42218017578125,55.76667257383551 37.42218017578125,55.76667257383551 37.920684814453125,55.62930103908055 37.920684814453125,55.62930103908055 37.42218017578125)))",
-            format_options : 'callback:getJson',
-            //maxFeatures : '25',
-
-            SrsName : 'EPSG:4326'
-        };
-        var parameters = L.Util.extend(defaultParameters);
-        var URL = owsrootUrl + L.Util.getParamString(parameters);
-
         var WFSLayer = null;
-        var ajax = $.ajax({
-            url : URL,
-            dataType : 'jsonp',
-            jsonpCallback : 'getJson',
-            success : function (response) {
-                WFSLayer = L.geoJson(response, {
-                    style: function () {
-                        return {
-                            stroke: true,
-                            color: '#FF0000',
-                            //opacity: 1,
-                            fillColor: 'FFFFFF',
-                            fillOpacity: 0
-                        };
-                    },
-                    onEachFeature: function (feature, layer) {
-                        popupOptions = {maxWidth: 250};
-                        layer.bindPopup((
-                        "Сенсор: " + feature.properties.PLATFORM.bold() +
-                        "<br>Номер снимка: " + feature.properties.CATALOGID.bold() +
-                        "<br>Дата съёмки: " + feature.properties.ACQDATE.bold() +
-                        "<br>Отклонение от надира: " + feature.properties.AVOFFNADIR + "°")
-                            ,popupOptions);
-                    }
-                }).addTo(map);
+        function addWV2015() {
+            if (map.hasLayer(WFSLayer)) {
+                WFSLayer.clearLayers();
             }
-        });
+            var defaultParameters = {
+                service: 'WFS',
+                version: '2.0',
+                request: 'GetFeature',
+                typeName: 'Geoportal:WorldView2_2015',
+                outputFormat: 'text/javascript',
+                cql_filter: "INTERSECTS(the_geom, "+ WKT +")",
+                format_options: 'callback:getJson',
+                //maxFeatures : '25',
+
+                SrsName: 'EPSG:4326'
+            };
+            var parameters = L.Util.extend(defaultParameters);
+            var URL = owsrootUrl + L.Util.getParamString(parameters);
+
+            //var WFSLayer = null; изначально объявление стоит тут, но изза необходимости очищать слой временно вынесено за функцию
+            var ajax = $.ajax({
+                url: URL,
+                dataType: 'jsonp',
+                jsonpCallback: 'getJson',
+                success: function (response) {
+                    WFSLayer = L.geoJson(response, {
+                        style: function () {
+                            return {
+                                stroke: true,
+                                weight: 3,
+                                //color: '#FF0000',
+                                //opacity: 1,
+                                fillColor: 'FFFFFF',
+                                fillOpacity: 0
+                            };
+                        },
+                        onEachFeature: function (feature, layer) {
+                            popupOptions = {maxWidth: 250};
+                            layer.bindPopup((
+                                    "Сенсор: " + feature.properties.PLATFORM.bold() +
+                                    "<br>Номер снимка: " + feature.properties.CATALOGID.bold() +
+                                    "<br>Дата съёмки: " + feature.properties.ACQDATE.bold() +
+                                    "<br>Отклонение от надира: " + feature.properties.AVOFFNADIR + "°")
+                                    , popupOptions);
+                        }
+                    }).addTo(map);
+                }
+            });
+        }
         // определение местоположения
         $("#Locator").click(toggleLocation);
         function toggleLocation() {
@@ -439,6 +448,12 @@
         $("#WKT").click(flashWKT);
         function flashWKT() {
             alert(WKT)
+        }
+
+        $("#Cleaner").click(wipeAll);
+        function wipeAll() {
+            WFSLayer.clearLayers();
+            drawnItems.clearLayers();
         }
 
     </script>
