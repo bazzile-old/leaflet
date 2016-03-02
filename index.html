@@ -20,8 +20,12 @@
         <button id="Locator"><b>Где мы?</b></button>
         <button id="InnoLocator"><b>А где Иннотер?</b></button>
         <button id="WKT"><b>Показать WKT объекта</b></button>
-        <button id="WV2015"><b>Показать слой WV2_2015</b></button>
+        <button id="WV2015"><b>Показать покрытие DG</b></button>
         <button id="Cleaner"><b>Очистить слои</b></button>
+    </div>
+    <div class="img_control" style="margin: 15px;">
+        <input type="checkbox" id="GE01"> Покрытие GeoEye-01 <br>
+        <input type="checkbox" id="QB02"> Покрытие QuickBird-02 <br>
     </div>
     <div id="map"></div>
 
@@ -353,6 +357,8 @@
         $("#WV2015").click(addWV2015);
 
         // добавляем WFS с атрибутами снимков
+        // параметры запросов CQL
+        var condition = '';
         var owsrootUrl = 'http://192.168.0.117:8080/geoserver/Geoportal/ows';
         var WFSLayer = null;
         function addWV2015() {
@@ -363,11 +369,11 @@
                 service: 'WFS',
                 version: '2.0',
                 request: 'GetFeature',
-                typeName: 'Geoportal:WorldView2_2015',
+                typeName: 'Geoportal:DG_shapes',
                 outputFormat: 'text/javascript',
-                cql_filter: "INTERSECTS(the_geom, "+ WKT +")",
+                cql_filter: "INTERSECTS(geom, "+ WKT +")"+condition,
                 format_options: 'callback:getJson',
-                //maxFeatures : '25',
+                maxFeatures : '25',
 
                 SrsName: 'EPSG:4326'
             };
@@ -455,6 +461,26 @@
             WFSLayer.clearLayers();
             drawnItems.clearLayers();
         }
+
+        $("#GE01").click(addGE01);
+        function addGE01() {
+            if($("#GE01").is(":checked")) {
+                condition = " and PLATFORM = 'GE01'"
+            }
+            else{
+                condition = ''
+            }
+        }
+        $("#QB02").click(addQB02);
+        function addQB02() {
+            if($("#QB02").is(":checked")) {
+                condition = " and PLATFORM = 'QB02'"
+            }
+            else{
+                condition = ''
+            }
+        }
+
 
     </script>
 </body>
