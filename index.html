@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Геопортал Иннотер</title>
+    <!-- Latest compiled and minified CDN CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/leaflet.css" />
     <link rel="stylesheet" href="css/Leaflet.Coordinates-0.1.5.css" />
     <link rel="stylesheet" href="css/leaflet-panel-layers.src.css" />
@@ -23,9 +25,13 @@
         <button id="WV2015"><b>Показать покрытие DG</b></button>
         <button id="Cleaner"><b>Очистить слои</b></button>
     </div>
-    <div class="img_control" style="margin: 15px;">
+    <div class="img_buttons" style="margin: 15px">
+        <h2>Поиск снимков</h2>
         <input type="checkbox" id="GE01"> Покрытие GeoEye-01 <br>
         <input type="checkbox" id="QB02"> Покрытие QuickBird-02 <br>
+        <button type="button" class="btn btn-primary">
+          <span class="glyphicon glyphicon-search"></span> Поиск
+        </button>
     </div>
     <div id="map"></div>
 
